@@ -12,7 +12,7 @@ CoreUI is meant to be the UX game changer. Pure & transparent code is devoid of 
 
 ## Table of Contents     
 
-
+ayuda
 * [Versions](#versions)
 * [CoreUI Pro](#coreui-pro)
 * [Admin Templates built on top of CoreUI Pro](#admin-templates-built-on-top-of-coreui-pro)
