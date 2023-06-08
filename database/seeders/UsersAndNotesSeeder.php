@@ -80,7 +80,7 @@ class UsersAndNotesSeeder extends Seeder
             'menuroles' => 'redprint' 
         ]);
         $user->assignRole('redprint');
-
+        $user->assignRole('user');
         $user = User::create([ 
             'name' => 'admin',
             'email' => 'admin@admin.com',

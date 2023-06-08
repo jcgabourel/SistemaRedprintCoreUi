@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
@@ -28,6 +29,7 @@ class UsersController extends Controller
     {
         $you = auth()->user();
         $users = User::all();
+        
         return view('dashboard.admin.usersList', compact('users', 'you'));
     }
 
@@ -52,7 +54,9 @@ class UsersController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
-        return view('dashboard.admin.userEditForm', compact('user'));
+        $roles = Role::whereNotIn('id',$user->Roles->pluck('id')->toArray())->get();
+       
+        return view('dashboard.admin.userEditForm', compact(['user','roles']));
     }
 
     /**
