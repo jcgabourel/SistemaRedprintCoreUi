@@ -196,6 +196,11 @@ class MenusTableSeeder extends Seeder
         $this->insertLink('guest,user,admin', 'Download CoreUI', 'https://coreui.io', 'cil-cloud-download');
         $this->insertLink('guest,user,admin', 'Try CoreUI PRO', 'https://coreui.io/pro/', 'cil-layers');
 
+        $this->beginDropdown('redprint', 'Inventarios', 'cil-star');
+            $this->insertLink('redprint', 'Movimientos',         '/inventarios/movimientos');
+            $this->insertLink('redprint', 'Cargar Facturas',      '/inventarios/cargarfactura');
+            $this->insertLink('redprint', 'Stock',     '/inventarios/stock');
+
 
         /* Create top menu */
         DB::table('menulist')->insert([
