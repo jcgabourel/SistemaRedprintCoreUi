@@ -200,6 +200,12 @@ class MenusTableSeeder extends Seeder
             $this->insertLink('redprint', 'Movimientos',         '/inventarios/movimientos');
             $this->insertLink('redprint', 'Cargar Facturas',      '/inventarios/cargarfactura');
             $this->insertLink('redprint', 'Stock',     '/inventarios/stock');
+        $this->endDropdown();
+        $this->beginDropdown('redprint', 'Administracion', 'cil-star');        
+            $this->beginDropdown('redprint', 'Catálogos', 'cil-star');        
+                $this->insertLink('redprint', 'Productos',         '/');
+                $this->insertLink('redprint', 'Categorias',         '/');
+                $this->insertLink('redprint', 'Locaciones',         '/');
 
 
         /* Create top menu */
