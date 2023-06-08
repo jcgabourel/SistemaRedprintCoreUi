@@ -25,6 +25,14 @@ class UsersAndNotesSeeder extends Seeder
         $statusIds = array();
         $faker = Faker::create();
         /* Create roles */
+
+        $redprintRole = Role::create(['name' => 'redprint']); 
+   
+        RoleHierarchy::create([
+            'role_id' => $redprintRole->id,
+            'hierarchy' => 2,
+        ]);
+
         $adminRole = Role::create(['name' => 'admin']); 
         RoleHierarchy::create([
             'role_id' => $adminRole->id,
@@ -33,12 +41,12 @@ class UsersAndNotesSeeder extends Seeder
         $userRole = Role::create(['name' => 'user']);
         RoleHierarchy::create([
             'role_id' => $userRole->id,
-            'hierarchy' => 2,
+            'hierarchy' => 3,
         ]);
         $guestRole = Role::create(['name' => 'guest']); 
         RoleHierarchy::create([
             'role_id' => $guestRole->id,
-            'hierarchy' => 3,
+            'hierarchy' => 4,
         ]);
         
         /*  insert status  */
@@ -64,6 +72,16 @@ class UsersAndNotesSeeder extends Seeder
         array_push($statusIds, DB::getPdo()->lastInsertId());
         /*  insert users   */
         $user = User::create([ 
+            'name' => 'juan carlos',
+            'email' => 'serviciosredprint@gmail.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+            'menuroles' => 'redprint' 
+        ]);
+        $user->assignRole('redprint');
+
+        $user = User::create([ 
             'name' => 'admin',
             'email' => 'admin@admin.com',
             'email_verified_at' => now(),
@@ -71,6 +89,11 @@ class UsersAndNotesSeeder extends Seeder
             'remember_token' => Str::random(10),
             'menuroles' => 'user,admin' 
         ]);
+
+        
+
+
+
         $user->assignRole('admin');
         $user->assignRole('user');
         for($i = 0; $i<$numberOfUsers; $i++){
