@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
+use Illuminate\Support\Facades\Schema;
+
 class ResourceController extends Controller
 {
     /**
@@ -23,10 +25,13 @@ class ResourceController extends Controller
     public function index($table, Request $request)
     {
         $role = Role::where('name', '=', 'guest')->first();
+        
         try {
-            if($role->hasPermissionTo('browse bread ' . $table)){
+            $guestHasPermission = false;
+            if($role->hasPermissionTo('browse bread ' . $table)){                 
                 $guestHasPermission = true;
             }
+            
         } catch (\Throwable $e) {
             $guestHasPermission = false;
         }       
@@ -60,6 +65,7 @@ class ResourceController extends Controller
     public function create($table, Request $request)
     {
         $role = Role::where('name', '=', 'guest')->first();
+        $guestHasPermission = false;
         try {
             if($role->hasPermissionTo('add bread ' . $table)){
                 $guestHasPermission = true;
@@ -102,6 +108,8 @@ class ResourceController extends Controller
     public function store($table, Request $request)
     {
         $role = Role::where('name', '=', 'guest')->first();
+        $guestHasPermission = false;
+
         try {
             if($role->hasPermissionTo('add bread ' . $table)){
                 $guestHasPermission = true;
@@ -122,9 +130,13 @@ class ResourceController extends Controller
         $form = Form::find( $table );
         $formFields = FormField::where('form_id', '=', $table)->where('add', '=', '1')->get();
         foreach($formFields as $formField){
-            $toValidate[$formField->column_name] = 'required';
-        }
-        $request->validate($toValidate);
+           // $toValidate[$formField->column_name] = 'required';
+        }        
+
+         
+
+       
+        $request->validate($toValidate);     
         if($form->add == 1){
             $resourceService = new ResourceService();
             $resourceService->add($form->id, $form->table_name, $request->all() );
@@ -144,6 +156,7 @@ class ResourceController extends Controller
     public function show($table, $id, Request $request)
     {
         $role = Role::where('name', '=', 'guest')->first();
+        $guestHasPermission = false;
         try {
             if($role->hasPermissionTo('read bread ' . $table)){
                 $guestHasPermission = true;
@@ -181,6 +194,7 @@ class ResourceController extends Controller
     public function edit($table, $id)
     {
         $role = Role::where('name', '=', 'guest')->first();
+        $guestHasPermission = false;
         try {
             if($role->hasPermissionTo('edit bread ' . $table)){
                 $guestHasPermission = true;
@@ -223,6 +237,7 @@ class ResourceController extends Controller
     public function update($table, $id, Request $request)
     {
         $role = Role::where('name', '=', 'guest')->first();
+        $guestHasPermission = false;
         try {
             if($role->hasPermissionTo('edit bread ' . $table)){
                 $guestHasPermission = true;
@@ -265,6 +280,7 @@ class ResourceController extends Controller
     public function destroy($table, Request $request, $id)
     {
         $role = Role::where('name', '=', 'guest')->first();
+        $guestHasPermission = false;
         try {
             if($role->hasPermissionTo('delete bread ' . $table)){
                 $guestHasPermission = true;

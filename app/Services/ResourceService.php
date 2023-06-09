@@ -107,12 +107,13 @@ class ResourceService{
         if(!empty($relations)){
             $table->addSelect($form->table_name . '.*');
         }
+        
         foreach( $relations as $relation ){
-            $table->leftJoin($relation['table'], $relation['table'] . '.id', '=', $form->table_name . '.' . $relation['thisTableColumnName']);
+            $table->leftJoin($relation['table'].' as tabla_relacionada',   'tabla_relacionada.id', '=',  $form->table_name.'.'. $relation['thisTableColumnName']);
             if(empty($relation['column'])){
                 $table->addSelect($relation['table'] . '.name AS relation_' . $relation['thisTableColumnName']);
             }else{
-                $table->addSelect($relation['table'] . '.' . $relation['column'] . ' AS relation_' . $relation['thisTableColumnName']);
+                $table->addSelect(  'tabla_relacionada.' . $relation['column'] . ' AS relation_' . $relation['thisTableColumnName']);
             }
         }
         $datas = $table->paginate( $form->pagination );   /* CHANGE PAGINATE * */
@@ -147,6 +148,8 @@ class ResourceService{
     public function add($formId, $tableName, $request){
         $columns = $this->getColumnsForAdd($formId);
         $toInsert = array();
+        //dd($request);
+
         foreach($columns as $column){
             if($column->type == 'checkbox' || $column->type == 'radio' || $column->type == 'relation_radio'){
                 if(isset($request[$column->column_name])){
@@ -157,7 +160,7 @@ class ResourceService{
             }elseif( $column->type == 'file' || $column->type == 'image' ){
                 $toInsert[ $column->column_name ] = $this->addMedia($request, $column->column_name);
             }else{
-                $toInsert[ $column->column_name ] = $request[$column->column_name];
+                $toInsert[ $column->column_name ] = isset($request[$column->column_name])?$request[$column->column_name]:null;
             }
         }
         DB::table($tableName)->insert($toInsert);
@@ -233,12 +236,14 @@ class ResourceService{
         if(!empty($relations)){
             $table->addSelect($form->table_name . '.*');
         }
+
+        
         foreach( $relations as $relation ){
-            $table->leftJoin($relation['table'], $relation['table'] . '.id', '=', $form->table_name . '.' . $relation['thisTableColumnName']);
+            $table->leftJoin($relation['table'] .' as t1','t1' . '.id', '=', $form->table_name .'.' . $relation['thisTableColumnName']);
             if(empty($relation['column'])){
                 $table->addSelect($relation['table'] . '.name AS relation_' . $relation['thisTableColumnName']);
             }else{
-                $table->addSelect($relation['table'] . '.' . $relation['column'] . ' AS relation_' . $relation['thisTableColumnName']);
+                $table->addSelect(  't1.' . $relation['column'] . ' AS relation_' . $relation['thisTableColumnName']);
             }
         }
         $data = $table->where($tableName . '.id', '=', $tableId)->first();  

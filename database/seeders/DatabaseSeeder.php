@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+ 
 //use database\seeds\UsersAndNotesSeeder;
 //use database\seeds\MenusTableSeeder;
 
@@ -33,6 +34,7 @@ class DatabaseSeeder extends Seeder
             ExampleSeeder::class,
             BREADSeeder::class,
             EmailSeeder::class,
+            MenuRedprintSeeder::class
         ]);
     }
 }

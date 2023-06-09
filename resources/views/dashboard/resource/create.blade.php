@@ -66,7 +66,7 @@
                                     }
                                 }elseif($column->type == 'relation_select'){
                                     echo '<label>' . $column->name . '</label>';
-                                    echo '<select name="' . $column->column_name . '" class="form-control">';
+                                    echo '<select name="' . $column->column_name . '" class="form-control">';                                        
                                     foreach($relations['relation_' . $column->column_name] as $relation){
                                         echo '<option value="' . $relation->id . '">' . $relation->name . '</option>';
                                     }
