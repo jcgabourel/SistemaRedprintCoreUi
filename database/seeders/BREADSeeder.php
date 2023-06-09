@@ -89,7 +89,7 @@ class BREADSeeder extends Seeder
             'edit' => 1,
             'add' => 1,
             'form_id' => $formId,
-            'column_name' => 'name'
+            'column_name' => 'nombre'
         ]);
 
         DB::table('form_field')->insert([
@@ -102,20 +102,67 @@ class BREADSeeder extends Seeder
             'form_id' => $formId,
             'column_name' => 'parent_id',
             'relation_table' => 'categorias',
-            'relation_column' => 'name'
+            'relation_column' => 'nombre'
+        ]);
+
+       
+        Permission::create(['name' => 'browse bread '   . $formId]); 
+        Permission::create(['name' => 'read bread '     . $formId]); 
+        Permission::create(['name' => 'edit bread '     . $formId]); 
+        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'delete bread '   . $formId]); 
+
+        $role = Role::where('name', '=', 'redprint')->first();
+        $role->givePermissionTo('browse bread '     . $formId);
+        $role->givePermissionTo('read bread '       . $formId);
+        $role->givePermissionTo('edit bread '       . $formId);
+        $role->givePermissionTo('add bread '        . $formId);
+        $role->givePermissionTo('delete bread '     . $formId);
+
+        $role = Role::where('name', '=', 'admin')->first();
+        $role->givePermissionTo('browse bread '     . $formId);
+        $role->givePermissionTo('read bread '       . $formId);
+        $role->givePermissionTo('edit bread '       . $formId);
+        $role->givePermissionTo('add bread '        . $formId);
+        $role->givePermissionTo('delete bread '     . $formId);
+
+
+        DB::table('form')->insert([
+            'name' => 'Productos',
+            'table_name' => 'productos',
+            'read' => 1,
+            'edit' => 1,
+            'add' => 1,
+            'delete' => 1,
+            'pagination' => 25
+        ]);
+        $formId = DB::getPdo()->lastInsertId();
+        DB::table('form_field')->insert([
+            'name' => 'Nombre',
+            'type' => 'text',
+            'browse' => 1,
+            'read' => 1,
+            'edit' => 1,
+            'add' => 1,
+            'form_id' => $formId,
+            'column_name' => 'nombre'
+        ]);
+
+        DB::table('form_field')->insert([
+            'name' => 'Categoria',
+            'type' => 'relation_select',
+            'browse' => 1,
+            'read' => 1,
+            'edit' => 1,
+            'add' => 1,
+            'form_id' => $formId,
+            'column_name' => 'categoria_id',
+            'relation_table' => 'categorias',
+            'relation_column' => 'nombre'
         ]);
        
-        DB::table('form_field')->insert([
-            'name' => 'created_at',
-            'type' => 'date',            
-            'browse' => 0,
-            'read' => 1,
-            'edit' => 0,
-            'add' => 0,                       
-            'form_id' => $formId,
-            'column_name' => 'created_at'
-            
-        ]);
+        
+         
         
         Permission::create(['name' => 'browse bread '   . $formId]); 
         Permission::create(['name' => 'read bread '     . $formId]); 

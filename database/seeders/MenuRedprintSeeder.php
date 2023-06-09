@@ -143,7 +143,7 @@ class MenuRedprintSeeder extends Seeder
         $this->endDropdown();
         $this->beginDropdown('redprint', 'Administracion', 'cil-star');        
             $this->beginDropdown('redprint', 'Catálogos', 'cil-star');        
-                $this->insertLink('redprint', 'Productos',         '/');
+                $this->insertLink('redprint', 'Productos',         '/resource/3/resource');
                 $this->insertLink('redprint', 'Categorias',         '/resource/2/resource');
                 $this->insertLink('redprint', 'Locaciones',         '/');
 

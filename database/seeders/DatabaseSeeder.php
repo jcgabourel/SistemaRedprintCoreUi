@@ -34,7 +34,8 @@ class DatabaseSeeder extends Seeder
             ExampleSeeder::class,
             BREADSeeder::class,
             EmailSeeder::class,
-            MenuRedprintSeeder::class
+            MenuRedprintSeeder::class,
+            CatalogosSeeder::class
         ]);
     }
 }
