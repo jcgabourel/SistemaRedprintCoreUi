@@ -185,5 +185,51 @@ class BREADSeeder extends Seeder
         $role->givePermissionTo('delete bread '     . $formId);
 
 
+
+        DB::table('form')->insert([
+            'name' => 'Locaciones',
+            'table_name' => 'locaciones',
+            'read' => 1,
+            'edit' => 1,
+            'add' => 1,
+            'delete' => 1,
+            'pagination' => 25
+        ]);
+        $formId = DB::getPdo()->lastInsertId();
+        DB::table('form_field')->insert([
+            'name' => 'Nombre',
+            'type' => 'text',
+            'browse' => 1,
+            'read' => 1,
+            'edit' => 1,
+            'add' => 1,
+            'form_id' => $formId,
+            'column_name' => 'nombre'
+        ]);
+
+          
+         
+        
+        Permission::create(['name' => 'browse bread '   . $formId]); 
+        Permission::create(['name' => 'read bread '     . $formId]); 
+        Permission::create(['name' => 'edit bread '     . $formId]); 
+        Permission::create(['name' => 'add bread '      . $formId]); 
+        Permission::create(['name' => 'delete bread '   . $formId]); 
+        
+        $role = Role::where('name', '=', 'redprint')->first();
+        $role->givePermissionTo('browse bread '     . $formId);
+        $role->givePermissionTo('read bread '       . $formId);
+        $role->givePermissionTo('edit bread '       . $formId);
+        $role->givePermissionTo('add bread '        . $formId);
+        $role->givePermissionTo('delete bread '     . $formId);
+
+        $role = Role::where('name', '=', 'admin')->first();
+        $role->givePermissionTo('browse bread '     . $formId);
+        $role->givePermissionTo('read bread '       . $formId);
+        $role->givePermissionTo('edit bread '       . $formId);
+        $role->givePermissionTo('add bread '        . $formId);
+        $role->givePermissionTo('delete bread '     . $formId);
+
+
     }
 }
